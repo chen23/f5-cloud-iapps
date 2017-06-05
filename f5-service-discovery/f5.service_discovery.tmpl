@@ -19,10 +19,10 @@ sys application template /Common/f5.service_discovery {
 
                 proc verify_hash { file_path } {
                     if {[catch {
-                        set hashes(f5-cloud-libs.tar.gz) bfe39b46735534492539141ce8a6eb0c49815e0639505398c4f17f6b0a390f70762f448e4a5b1fe2caf785c4bfa4447eb866929c2915314a6b323b50f0aaa153
-                        set hashes(f5-cloud-libs-aws.tar.gz) d67ccf46a3e772e7bb909185371bf7f7560a63b88d58eef5cc2be7f3b236ecbda2868beaa413d8c54c4c55456c650499572a423b10fe4613654aec8d7fa2b96e
+                        set hashes(f5-cloud-libs.tar.gz) f2115a7d423bc980d0dd1dfe62956eeb2bb59a3a0645982e0f02693cbf0ae2d56b5413cea026dac29b4ccffa9f39c6418acd2019975e1daf66efd3e81658b29f
+                        set hashes(f5-cloud-libs-aws.tar.gz) de0e76eab2dcae4c36571f31c4377f2682d68b19acbb4f6ac9a88f4fdb6beae0341e93701d35a696302ef6302c545f917a0be661a1258694cb5030ab77b9cccd
                         set hashes(f5-cloud-libs-azure.tar.gz) 9d4dc6779a5d25253832598d42681defa54c5f4521a70ba8e053179c262cdf0d5c8d6a3d458ea21da1d95212792b099bf2721ddbe175eed035cd1e00647124cf
-                        set hashes(f5-cloud-nodes-worker-0.0.1-1.noarch.rpm) 073a577468cbc860b4a74b86164494e4e1cd9b625815f153ba164a70e8227a95958cc5bd208bb99ed3a4872a6ef05d3e5540f7be7851369dbc97e843931bcb1d
+                        set hashes(f5-cloud-nodes-worker-0.0.1-1.noarch.rpm) e62f153cfc214bab428df043204375b58e38086ffe79cff35d5c288758145b1ee57aeb2510468e370be49a708172f46302d651b1d1ccb48ba376ee0abaf992f2
 
                         set file_name [file tail $file_path]
 
@@ -54,9 +54,9 @@ sys application template /Common/f5.service_discovery {
                     set dependencies(1,/config/cloud/$cloud_provider/node_modules/f5-cloud-libs) \
                         https://raw.githubusercontent.com/F5Networks/f5-cloud-libs/serviceDiscovery/dist/f5-cloud-libs.tar.gz
                     set dependencies(2,/config/cloud/$cloud_provider/node_modules/f5-cloud-libs/node_modules/f5-cloud-libs-$cloud_provider) \
-                        https://raw.githubusercontent.com/F5Networks/f5-cloud-libs-$cloud_provider/serviceDiscovery/dist/f5-cloud-libs-$cloud_provider.tar.gz
+                        https://raw.githubusercontent.com/F5Networks/f5-cloud-libs-$cloud_provider/provider/dist/f5-cloud-libs-$cloud_provider.tar.gz
                     set dependencies(3,/var/config/rest/iapps/f5-cloud-nodes-worker) \
-                        https://raw.githubusercontent.com/F5Networks/f5-cloud-workers/initial/dist/f5-cloud-nodes-worker-0.0.1-1.noarch.rpm
+                        https://raw.githubusercontent.com/F5Networks/f5-cloud-workers/provider/dist/f5-cloud-nodes-worker-0.0.1-1.noarch.rpm
 
                     set mgmt_port [tmsh::get_config sys httpd ssl-port]
                     set mgmt_port [regexp -all -inline {\d+} $mgmt_port]
@@ -183,7 +183,7 @@ sys application template /Common/f5.service_discovery {
                     tmsh::modify sys application service <APP_NAME> strict-updates disabled
                     set mgmt_port [tmsh::get_config sys httpd ssl-port]
                     set mgmt_port [regexp -all -inline {\d+} $mgmt_port]
-                    set members [exec /bin/bash -c "NODE_JSON=\$(curl -sku admin: https://localhost:$mgmt_port/mgmt/shared/cloud/nodes?mgmtPort=$mgmt_port\\&cloud=<CLOUD>\\&memberTag=<MEMBER_TAG_KEY>=<MEMBER_TAG_VALUE>\\&memberAddressType=<ADDRESS_TYPE>\\&memberPort=<MEMBER_PORT>\\&roleArn=<ROLE_ARN>\\&externalId=<EXTERNAL_ID>\\&region=<REGION>);
+                    set members [exec /bin/bash -c "NODE_JSON=\$(curl -sku admin: https://localhost:$mgmt_port/mgmt/shared/cloud/nodes?mgmtPort=$mgmt_port\\&cloud=<CLOUD>\\&memberTag=<MEMBER_TAG_KEY>=<MEMBER_TAG_VALUE>\\&memberAddressType=<ADDRESS_TYPE>\\&memberPort=<MEMBER_PORT>\\&providerOptions=roleArn=<ROLE_ARN>,externalId=<EXTERNAL_ID>,region=<REGION>);
                                                     echo \$NODE_JSON | jq -r '\[.\[\] | \"\\(.id):<MEMBER_PORT> { address \\(.ip) connection-limit <CONNECTION_LIMIT> }\"\] | join (\" \")'"]
                     tmsh::modify ltm pool <POOL_TO_USE> members replace-all-with \{ $members \} load-balancing-mode <LB_METHOD>
                 }
