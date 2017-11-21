@@ -16,10 +16,10 @@ sys application template /Common/f5.service_discovery {
                 proc verify_hash { file_path } {
                     if {[catch {
 
-                        set hashes(f5-cloud-libs.tar.gz) 40e44ae3646127fec825e08c5aeaf85a23ed56d46f735d4e1b60f0e686de5be9fb866d5d039e906344f5877a6127e62706cf19fcffa4cf30bc6d669392772611
-                        set hashes(f5-cloud-libs-aws.tar.gz) 26cf3e7a32798da14c53967b9b9e0603e6240494e88db32394f2f792ac1551e800adc778b4ae1840c702c3535214cddc85df5983e02a4b76295ece3701c98fe2
-                        set hashes(f5-cloud-libs-azure.tar.gz) 1d88e6e5ad5f9ce635a91494c03c7eebb1197dd9ecae2ccef7b8ae455902840f9001023489f9fd7c9231088932592ce540eaab199764464be657d9070d948f00
-                        set hashes(f5-cloud-libs-gce.tar.gz) d52a733f708fe391704a7084b7e1819242e9a38ce5537d8a17bf84a373fb07a7edb60cf7331639b95b6d610f7d34ec1623d60d1569ff734e9efe58a172575517
+                        set hashes(f5-cloud-libs.tar.gz) 4ab4f2ebc4838c574bfa036f190a47f82fdfbcf840adb261afe7c2ada5be86cf2cba00c9c1b511a427c0a8cf8335d89981ff44491afdfdcfcfff534cfad34f62
+                        set hashes(f5-cloud-libs-aws.tar.gz) 82248342cb4db9c64fa7b99d8f610deb212c47788f66fc6c93bdd9c37f2de1592bbdda0953cfc8517c1a5cd3440e186cb19f720cbffd920edbf8a7cf08806ef0
+                        set hashes(f5-cloud-libs-azure.tar.gz) 9195f5969a6594238865103eacc86ce6bdeaff9e4f312d3733e818f4694de1c688934f2d088667dc6b4b3cb7b22d6ca0bd65f5d6a57379bb3cab1bbd655799b0
+                        set hashes(f5-cloud-libs-gce.tar.gz) 61f488c2de2ae78965598d261a92467c40ce0ead0ba9eca0dad22e64aee71132fe382129bd7ed8632ab88bb3d8a5f6c57137417f298c446205b1e42d808d5e1e
                         set hashes(f5-cloud-nodes-worker-1.1.0-1.noarch.rpm) 15ccf20965bede3a3788cfe430085f30364a3e908b4dec4e607e7ddd2b8689e42c92126c4644480852c63e9baee9905415d2209d6bf2007e7c25fc25ea29eb16
 
                         set file_name [file tail $file_path]
