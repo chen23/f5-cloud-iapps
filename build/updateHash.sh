@@ -24,7 +24,7 @@ if [[ "$BRANCH" =~ $RELEASE || "$BRANCH" =~ $HOTFIX ]]; then
     curl -s --insecure -o ${DOWNLOAD_LOCATION}.zip -H "PRIVATE-TOKEN: $API_TOKEN" "$URL"
     echo Unzipping build
     unzip ${DOWNLOAD_LOCATION}.zip
-    mv dist/* "$DOWNLOAD_LOCATION"
+    mv dist/* /tmp
 else
     echo Using dist directory
     URL=https://gitswarm.f5net.com/cloudsolutions/${REPO}/raw/${BRANCH}/${FILE}
