@@ -2,6 +2,7 @@ PROJECT_ID="$1"
 REPO="$2"
 BRANCH="$3"
 FILE="$4"
+BUILD_ID="$5"
 
 RELEASE=^release-.*
 HOTFIX=^hf-.*
@@ -17,10 +18,10 @@ FILE_NAME=${FILE##*/}
 echo FILE_NAME "$FILE_NAME"
 DOWNLOAD_LOCATION=/tmp/"$FILE_NAME"
 
-if [[ "$BRANCH" =~ $RELEASE || "$BRANCH" =~ $HOTFIX ]]; then
+if [[ -n "BUILD_ID" && "$BRANCH" =~ $RELEASE || "$BRANCH" =~ $HOTFIX ]]; then
     echo Using build artifact
     UNZIP_DIR=/tmp/f5-cloud-dist
-    URL="https://gitswarm.f5net.com/api/v3/projects/${PROJECT_ID}/builds/artifacts/$BRANCH/download?job=package"
+    URL="https://gitswarm.f5net.com/api/v3/projects/${PROJECT_ID}/builds/${BUILD_ID}/artifacts"
     echo URL "$URL"
     curl -s --insecure -o ${DOWNLOAD_LOCATION}.zip -H "PRIVATE-TOKEN: $API_TOKEN" "$URL"
     echo Unzipping build to ${UNZIP_DIR}
