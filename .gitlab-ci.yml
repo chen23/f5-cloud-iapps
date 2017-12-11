@@ -4,6 +4,13 @@ stages:
     - update
     - notify
 
+variables:
+  GIT_STRATEGY: fetch
+
+cache:
+    paths:
+        - node_modules/
+
 update_hash:
     tags:
         - docker-executor
@@ -11,8 +18,10 @@ update_hash:
     only:
         - triggers
     script:
-        - if [[ -n "${UPDATE_HASH_REPO}" && "${UPDATE_HASH_BRANCH}" && "${UPDATE_HASH_FILE}" ]]; then
-        -     ./build/updateHash.sh "${UPDATE_HASH_REPO}" "${UPDATE_HASH_BRANCH}" "${UPDATE_HASH_FILE}"
+        - if [[ -n "${UPDATE_HASH_PROJECT_ID}" && -n "${UPDATE_HASH_REPO}" && "${UPDATE_HASH_BRANCH}" && "${UPDATE_HASH_FILE}" ]]; then
+        -     apt-get update
+        -     apt-get install -y unzip
+        -     ./build/updateHash.sh "${UPDATE_HASH_PROJECT_ID}" "${UPDATE_HASH_REPO}" "${UPDATE_HASH_BRANCH}" "${UPDATE_HASH_FILE}" "${UPDATE_HASH_BUILD_ID}"
         -     ./build/commitAndPush.sh
         - fi
 
@@ -26,4 +35,9 @@ notify:
         - master
         - triggers
     script:
-        - ./build/notifyProjects.sh
+        - if [[ "$AUTO_NOTIFY" == true ]]; then
+        -     echo 'Running notifyProjects.sh'
+        -     ./build/notifyProjects.sh
+        - else
+        -     echo AUTO_NOTIFY is off, skipping notification.
+        - fi

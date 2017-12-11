@@ -16,10 +16,10 @@ sys application template /Common/f5.service_discovery {
                 proc verify_hash { file_path } {
                     if {[catch {
 
-                        set hashes(f5-cloud-libs.tar.gz) 9e1fe1df55db1dfe5f445aa6c11924eabe53aa79ba69e935e4057230ce3aa4b90b22471eb89a84fe386b2c11a7a709bd4a3addd87a9af7d29d88306dbdc60b0e
-                        set hashes(f5-cloud-libs-aws.tar.gz) 82248342cb4db9c64fa7b99d8f610deb212c47788f66fc6c93bdd9c37f2de1592bbdda0953cfc8517c1a5cd3440e186cb19f720cbffd920edbf8a7cf08806ef0
-                        set hashes(f5-cloud-libs-azure.tar.gz) 48240aa0281795f781866ecb18e2ee8f1cca46a98210a771d8a2c7eaab66b25ef7d71d649fbd54b07b56cf2d637e0ee8aace83709c6359d0894eec30c429d340
-                        set hashes(f5-cloud-libs-gce.tar.gz) 821cc7d1584122c5e5eb83440780a4d4c71049b3738361ad626a79ef6e4abf40bb75eb95429cd1528af96f9a42e09917d86811243e564206c1e6c04affa8e15c
+                        set hashes(f5-cloud-libs.tar.gz) a2ff53027542356b42d6431a395de94e8a350b9ba54f969f2d32d28c6875532b512af52077d124cc3d00837ff9ff66a0aebbf4219453e1a4681300151ec01e65
+                        set hashes(f5-cloud-libs-aws.tar.gz) 1a4ba191e997b2cfaaee0104deccc0414a6c4cc221aedc65fbdec8e47a72f1d5258b047d6487a205fa043fdbd6c8fcb1b978cac36788e493e94a4542f90bd92b
+                        set hashes(f5-cloud-libs-azure.tar.gz) f3b24e383b81090996f051279400679f26eb7c0ec1c1de3d712b446eea4a2cbd7d5edb4e1638033078339ba606451b35afaaa0a9e71fd04de3e3151434917b5d
+                        set hashes(f5-cloud-libs-gce.tar.gz) 6ef33cc94c806b1e4e9e25ebb96a20eb1fe5975a83b2cd82b0d6ccbc8374be113ac74121d697f3bfc26bf49a55e948200f731607ce9aa9d23cd2e81299a653c1
                         set hashes(f5-cloud-nodes-worker-1.1.0-1.noarch.rpm) 15ccf20965bede3a3788cfe430085f30364a3e908b4dec4e607e7ddd2b8689e42c92126c4644480852c63e9baee9905415d2209d6bf2007e7c25fc25ea29eb16
 
                         set file_name [file tail $file_path]
@@ -52,16 +52,16 @@ sys application template /Common/f5.service_discovery {
                     set cloud_provider $::cloud__cloud_provider
                     set wait_for_restnoded 0
 
-                    set cloud_libs_tag v3.4.1
+                    set cloud_libs_tag v3.5.0
                     set nodes_worker_tag v1.1.0
 
                     set top_dir /config/cloud/$cloud_provider/node_modules
                     switch $cloud_provider {
                         aws {
-                            set provider_tag v1.5.0
+                            set provider_tag v1.6.0
                         }
                         azure {
-                            set provider_tag v1.3.0
+                            set provider_tag v1.4.0
                         }
                         gce {
                             set provider_tag v1.0.0
@@ -572,7 +572,7 @@ sys application template /Common/f5.service_discovery {
         }
     }
     description none
-    ignore-verification true
+    ignore-verification false
     requires-bigip-version-max none
     requires-bigip-version-min 12.1.0
     requires-modules { ltm }
