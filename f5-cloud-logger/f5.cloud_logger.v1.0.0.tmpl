@@ -265,7 +265,7 @@ when HTTP_RESPONSE_DATA {
 	## Account for uniqueness in the iRule(s) based on which analytics solution it is using
 	# Keys: $analytics_solution
 	array set host_arr {
-		azure_oms 			{ ${workspace}.ods.opinsights.azure.com }
+		azure_oms 			{ ${workspace}.ods.opinsights.azure.us }
 		aws_cw 				{ logs.${aws_region}.amazonaws.com }
 		* 					{ not_required }
 	}
@@ -406,7 +406,7 @@ when HTTP_RESPONSE_DATA {
 	# create analytics solution pool
 	# Keys: $analytics_solution
 	array set pool_arr {
-		azure_oms { [iapp::conf create ltm pool ${app}_logging_offbox \{ members replace-all-with \{ [format_poolmembers ${workspace}.ods.opinsights.azure.com:443] \} monitor tcp \}] }
+		azure_oms { [iapp::conf create ltm pool ${app}_logging_offbox \{ members replace-all-with \{ [format_poolmembers ${workspace}.ods.opinsights.azure.us:443] \} monitor tcp \}] }
 		aws_cw { [iapp::conf create ltm pool ${app}_logging_offbox \{ members replace-all-with \{ [format_poolmembers logs.${aws_region}.amazonaws.com:443] \} monitor tcp \}] }
 		* {}
 	}
